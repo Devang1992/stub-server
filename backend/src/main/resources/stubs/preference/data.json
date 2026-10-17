@@ -1,0 +1,87 @@
+[
+  {
+    "customerCode": "C1001",
+    "bankId": "B001",
+    "_note": "Happy path, mail delivery",
+    "response": {
+      "customerCode": "C1001",
+      "bankId": "B001",
+      "deliveryMode": "MAIL",
+      "language": "EN",
+      "alerts": { "wireReceived": true, "wireSent": true, "lowBalance": false },
+      "contact": { "email": "c1001@example.com" },
+      "lastUpdated": "2026-09-30T14:22:00Z"
+    }
+  },
+  {
+    "customerCode": "C1001",
+    "bankId": "B002",
+    "_note": "Same customer under a second bank, real-time delivery",
+    "response": {
+      "customerCode": "C1001",
+      "bankId": "B002",
+      "deliveryMode": "REALTIME",
+      "language": "EN",
+      "alerts": { "wireReceived": true, "wireSent": false, "lowBalance": true },
+      "contact": { "mobile": "+1-416-555-0101" },
+      "lastUpdated": "2026-10-02T09:10:00Z"
+    }
+  },
+  {
+    "customerCode": "C1002",
+    "bankId": "B001",
+    "_note": "French, real-time",
+    "response": {
+      "customerCode": "C1002",
+      "bankId": "B001",
+      "deliveryMode": "REALTIME",
+      "language": "FR",
+      "alerts": { "wireReceived": true, "wireSent": true, "lowBalance": true },
+      "contact": { "mobile": "+1-514-555-0102" },
+      "lastUpdated": "2026-08-15T18:45:00Z"
+    }
+  },
+  {
+    "customerCode": "C1003",
+    "bankId": "B001",
+    "_note": "Opted out of all alerts",
+    "response": {
+      "customerCode": "C1003",
+      "bankId": "B001",
+      "deliveryMode": "NONE",
+      "language": "EN",
+      "alerts": { "wireReceived": false, "wireSent": false, "lowBalance": false },
+      "contact": {},
+      "lastUpdated": "2026-07-01T12:00:00Z"
+    }
+  },
+  {
+    "customerCode": "C5030",
+    "bankId": "B001",
+    "_status": 503,
+    "_note": "Always returns 503, for retry testing",
+    "response": {}
+  },
+  {
+    "customerCode": "C5000",
+    "bankId": "B001",
+    "_status": 500,
+    "_note": "Always returns 500",
+    "response": {}
+  },
+  {
+    "customerCode": "C8000",
+    "bankId": "B001",
+    "_delayMs": 8000,
+    "_note": "Responds after 8 seconds, for timeout testing",
+    "response": {
+      "customerCode": "C8000",
+      "bankId": "B001",
+      "deliveryMode": "MAIL",
+      "language": "EN",
+      "alerts": { "wireReceived": true, "wireSent": true, "lowBalance": false },
+      "contact": { "email": "slow@example.com" },
+      "lastUpdated": "2026-09-01T00:00:00Z"
+    }
+  }
+]

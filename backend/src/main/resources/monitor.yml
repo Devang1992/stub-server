@@ -1,0 +1,19 @@
+# ---------------------------------------------------------------
+# Apps shown on the App status page. Pinged every interval-ms.
+# ---------------------------------------------------------------
+qa-hub:
+  monitor:
+    interval-ms: 30000
+    timeout-ms: 5000
+    apps:
+      - name: QA Hub
+        url: http://localhost:8080/actuator/health
+        description: This tool
+      - name: PCSS Preference Stream
+        url: http://pcss-stream.qa.internal:8081/actuator/health   # replace with real host
+        description: Kafka Streams app routing to Mail / Real-time topics
+      - name: RightFax Delivery
+        url: http://rightfax-delivery.qa.internal:8082/actuator/health   # replace with real host
+        description: Fax delivery integration
+        # headers:                     # only if actuator is secured
+        #   Authorization: Basic dXNlcjpwYXNz

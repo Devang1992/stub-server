@@ -1,0 +1,54 @@
+# ---------------------------------------------------------------
+# Stub endpoints. Add an entry under "endpoints", restart, done.
+# File locations accept classpath:... (inside JAR) or file:... (on disk).
+# ---------------------------------------------------------------
+qa-hub:
+  stub:
+    base-path: /stub              # every stub lives under this prefix
+    status-header: x-http         # send "x-http: 503" to force that status
+    delay-header: x-delay-ms      # send "x-delay-ms: 8000" to slow any call down
+    auth:                         # default auth for all endpoints (override per endpoint)
+      type: bearer                # none | bearer | basic | api-key
+      header: Authorization
+      tokens:                     # leave empty to accept any token
+        - qa-token-123
+        - qa-token-456
+
+    endpoints:
+      - id: preference
+        name: Customer preference lookup
+        description: >
+          Returns delivery preferences for a customer. customerCode is required;
+          bankId narrows the lookup when a customer exists under more than one bank.
+        method: GET
+        path: /v1/preferences
+        headers:
+          - name: X-Request-Id
+            required: true
+            description: Correlation id, any unique string
+            example: 3f2a9c1e-qa
+          - name: X-Channel
+            required: false
+            description: Calling channel
+            allowed: [WEB, MOBILE, BATCH]
+            example: BATCH
+        params:
+          - name: customerCode
+            in: query
+            required: true
+            field: customerCode     # key in data.json this param matches
+            description: Customer code
+            example: C1001
+          - name: bankId
+            in: query
+            required: false
+            field: bankId
+            description: Bank identifier
+            example: B001
+        data: classpath:stubs/preference/data.json
+        result: single              # single = first matching record, list = all matches
+        response-field: response    # return record.response instead of the whole record
+        sample-request: classpath:stubs/preference/request.json
+        sample-response: classpath:stubs/preference/response.json
+        errors: classpath:stubs/preference/errors/   # {code}.json bodies, optional
+        supported-codes: [200, 400, 401, 403, 404, 409, 422, 429, 500, 502, 503, 504]

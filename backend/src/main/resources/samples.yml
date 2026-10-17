@@ -1,0 +1,17 @@
+# ---------------------------------------------------------------
+# Samples shown (collapsed) on the App status page.
+# ---------------------------------------------------------------
+qa-hub:
+  samples:
+    - name: Preference lookup response
+      app: PCSS Preference Stream
+      description: What PCSS returns for a customer opted into mail delivery
+      path: classpath:stubs/preference/response.json
+    - name: Preference event (input topic)
+      app: PCSS Preference Stream
+      description: Event consumed by the stream before the PCSS call
+      path: classpath:samples/pcss/preference-event.json
+    - name: Send fax request
+      app: RightFax Delivery
+      description: Request body for submitting a fax
+      path: classpath:samples/rightfax/send-fax-request.json

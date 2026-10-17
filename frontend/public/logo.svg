@@ -1,0 +1,5 @@
+<!-- Placeholder. Replace with the official logo file from your brand assets (keep the name logo.svg, or change Layout.jsx). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <rect width="48" height="48" rx="4" fill="#ffffff" stroke="#c9cfc6"/>
+  <text x="24" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#5a6157">LOGO</text>
+</svg>

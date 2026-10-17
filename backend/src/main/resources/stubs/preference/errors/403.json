@@ -1,0 +1,7 @@
+{
+  "status": {{status}},
+  "errorCode": "PREF-403",
+  "message": "{{message}}",
+  "path": "{{path}}",
+  "timestamp": "{{timestamp}}"
+}

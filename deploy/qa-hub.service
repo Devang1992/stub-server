@@ -1,0 +1,15 @@
+# Only if you have sudo. Copy to /etc/systemd/system/qa-hub.service, then:
+#   sudo systemctl daemon-reload && sudo systemctl enable --now qa-hub
+[Unit]
+Description=QA Hub
+After=network.target
+
+[Service]
+User=qahub
+WorkingDirectory=/opt/qa-hub
+ExecStart=/usr/bin/java -Xms128m -Xmx512m -jar /opt/qa-hub/qa-hub.jar --server.port=8080
+Restart=on-failure
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

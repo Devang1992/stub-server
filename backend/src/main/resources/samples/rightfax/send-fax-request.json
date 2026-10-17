@@ -1,0 +1,6 @@
+{
+  "recipient": { "name": "QA Recipient", "faxNumber": "+1-416-555-0199" },
+  "coverSheet": { "subject": "Wire confirmation", "note": "QA test fax" },
+  "document": { "fileName": "confirmation.pdf", "contentType": "application/pdf", "base64": "JVBERi0xLjQK..." },
+  "reference": "QA-FAX-0001"
+}

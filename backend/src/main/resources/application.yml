@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: qa-hub
+  threads:
+    virtual:
+      enabled: true          # delay/timeout stubs sleep on cheap virtual threads
+  config:
+    import:
+      # Packaged defaults (inside the JAR)
+      - classpath:stubs.yml
+      - classpath:monitor.yml
+      - classpath:samples.yml
+      # Optional overrides next to the JAR: edit these + restart, no rebuild needed
+      - optional:file:./config/stubs.yml
+      - optional:file:./config/monitor.yml
+      - optional:file:./config/samples.yml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+logging:
+  level:
+    com.qahub: INFO

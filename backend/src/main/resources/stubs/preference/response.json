@@ -1,0 +1,9 @@
+{
+  "customerCode": "C1001",
+  "bankId": "B001",
+  "deliveryMode": "MAIL",
+  "language": "EN",
+  "alerts": { "wireReceived": true, "wireSent": true, "lowBalance": false },
+  "contact": { "email": "c1001@example.com" },
+  "lastUpdated": "2026-09-30T14:22:00Z"
+}
