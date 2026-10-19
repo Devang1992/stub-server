@@ -1,26 +1,31 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+ 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>4.0.3</version>
         <relativePath/>
     </parent>
-
+ 
     <groupId>com.qahub</groupId>
     <artifactId>qa-hub</artifactId>
     <version>0.1.0</version>
     <name>qa-hub</name>
     <description>QA stub server, app status and samples</description>
-
+ 
     <properties>
         <java.version>21</java.version>
+        <frontend.dir>${project.basedir}/../frontend</frontend.dir>
+        <!-- npm on Linux/Mac; switched to npm.cmd on Windows by the profile below -->
+        <npm.executable>npm</npm.executable>
+        <skip.npm>false</skip.npm>
     </properties>
-
+ 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -36,14 +41,61 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
-
+ 
     <build>
         <finalName>qa-hub</finalName>
         <plugins>
+            <!-- Builds the React UI with the Node/npm already installed on this machine.
+                 Vite writes into src/main/resources/static, which Maven then puts in the JAR.
+                 Skip with -Dskip.npm=true when only Java changed. -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <executable>${npm.executable}</executable>
+                    <workingDirectory>${frontend.dir}</workingDirectory>
+                    <skip>${skip.npm}</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>npm-install</id>
+                        <phase>generate-resources</phase>
+                        <goals><goal>exec</goal></goals>
+                        <configuration>
+                            <arguments><argument>install</argument></arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm-build</id>
+                        <phase>generate-resources</phase>
+                        <goals><goal>exec</goal></goals>
+                        <configuration>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>build</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
+ 
+    <profiles>
+        <!-- On Windows npm is a .cmd script, so it must be called by that name -->
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os><family>windows</family></os>
+            </activation>
+            <properties>
+                <npm.executable>npm.cmd</npm.executable>
+            </properties>
+        </profile>
+    </profiles>
 </project>
