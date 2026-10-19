@@ -1,0 +1,26 @@
+I’ve updated the project so Maven builds the frontend and backend together. One command now produces one JAR with the UI inside.
+
+What changed: I added frontend-maven-plugin to pom.xml. During mvn package it:
+
+downloads Node into backend/.node the first time, so nothing is installed system-wide,
+runs npm ci and npm run build in the frontend folder,
+writes the built UI into src/main/resources/static,
+and then Maven packages everything into target/qa-hub.jar.
+
+To use it, replace backend/pom.xml with the new pom.xml, or use the updated qa-hub.zip. Then run:
+
+cmd
+cd qa-hub\backend
+mvn clean package
+java -jar target\qa-hub.jar
+
+Open http://localhost:8080. The UI and the stubs are both served from there, and that same JAR is what you copy to the Linux box.
+
+Faster builds when only Java changed:
+
+cmd
+mvn spring-boot:run -Dskip.npm -Dskip.installnodenpm
+
+Without those flags, spring-boot:run rebuilds the UI on every start, which adds about 20 seconds. For UI work, npm run dev on port 5173 is still the fastest loop, because changes appear instantly without a rebuild.
+
+Likely snag at work: the first build downloads Node from nodejs.org, and corporate networks often block that. If you see a download or SSL error at the install-node-and-npm step, uncomment the nodeDownloadRoot line in pom.xml and point it at your internal Artifactory’s Node mirror. Your team probably already has one. npm ci may similarly need your internal npm registry set in a frontend/.npmrc file.
